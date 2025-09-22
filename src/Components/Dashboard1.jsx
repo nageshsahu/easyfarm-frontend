@@ -135,7 +135,7 @@ function Dashboard1({ user: propUser, setUser: propSetUser }) {
       try {
         const token = localStorage.getItem('token');
         if (token && !propUser) {
-          const response = await axios.get("http://localhost:5000/api/auth/session", {
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/session`, {
             withCredentials: true,
             headers: { Authorization: `Bearer ${token}` }
           });

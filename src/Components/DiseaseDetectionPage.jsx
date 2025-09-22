@@ -5,6 +5,9 @@ import RightNavbar from './RightNavbar'; // Make sure this path is correct
 
 import * as tf from '@tensorflow/tfjs';
 
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY; // Vite
+        // const apiKey = process.env.REACT_APP_WEATHER_API_KEY; // CRA
+
 
 const DiseaseDetectionPage = () => {
   const [image, setImage] = useState(null);
@@ -232,7 +235,7 @@ const DiseaseDetectionPage = () => {
     // Check for user session from local storage
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:5000/api/auth/session', {
+      axios.get(`${BACKEND_URL}/api/auth/session`, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -290,7 +293,7 @@ const DiseaseDetectionPage = () => {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
       try {
-        const apiKey = "0fda3101ea7e13b3ae97059d812466bd";
+        const apiKey = import.meta.env.VITE_WEATHER_API_KEY; // Vite
         const res = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
         );

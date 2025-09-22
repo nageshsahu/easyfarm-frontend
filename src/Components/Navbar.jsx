@@ -31,7 +31,7 @@ const Navbar = ({ user, setUser }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/auth/session", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/session`, {
           withCredentials: true,
         });
         setUser(response.data.user || null);

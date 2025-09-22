@@ -82,7 +82,7 @@ export default function CropDashboard() {
     // Check for user session from local storage
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:5000/api/auth/session', {
+      axios.get(`${import.meta.env.VITE_API_URL}/api/auth/session`, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` }
       })

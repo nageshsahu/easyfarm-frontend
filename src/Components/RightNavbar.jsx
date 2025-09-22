@@ -26,9 +26,14 @@ const RightNavbar = ({ user, setUser }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/auth/session", {
-          withCredentials: true,
-        });
+        // Using environment variable for backend URL
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/auth/session`, // Vite
+          // `${process.env.REACT_APP_API_URL}/api/auth/session`, // CRA
+          {
+            withCredentials: true,
+          }
+        );
         setUser(response.data.user || null);
       } catch (error) {
         console.error("Error fetching user session:", error);

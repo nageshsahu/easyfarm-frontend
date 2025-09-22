@@ -28,8 +28,14 @@ const AppContent = () => {
   const [user, setUser] = useState(null);
   const location = useLocation();
 
-  const hideTopNavbarRoutes = ['/Dashboard', '/Dashboard1', '/CropRecommendation', '/DiseaseDetectionPage', '/CropDashboard'];
-  const showRightNavbarRoutes = ['/CropDashboard', '/Dashboard1']; // ✅ Show right navbar only on these
+  const hideTopNavbarRoutes = [
+    '/Dashboard',
+    '/Dashboard1',
+    '/CropRecommendation',
+    '/DiseaseDetectionPage',
+    '/CropDashboard'
+  ];
+  const showRightNavbarRoutes = ['/CropDashboard', '/Dashboard1'];
 
   const shouldHideTopNavbar = hideTopNavbarRoutes.includes(location.pathname);
   const shouldShowRightNavbar = showRightNavbarRoutes.includes(location.pathname);
@@ -37,10 +43,13 @@ const AppContent = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:5000/api/auth/session', {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token} `}
-      })
+      axios.get(
+        `${import.meta.env.VITE_API_URL}/api/auth/session`, // ✅ using env variable
+        {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      )
       .then((res) => setUser(res.data.user))
       .catch(() => localStorage.removeItem('token'));
     }
