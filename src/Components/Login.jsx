@@ -19,9 +19,11 @@ const Login = ({ setUser }) => {
         if (token) {
             // Verify token validity
             axios
-                .get("http://localhost:5000/api/auth/session", {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
+                .get(
+                `${import.meta.env.VITE_API_URL}/api/auth/session`, 
+                { headers: { Authorization: `Bearer ${token}` } }
+)
+
                 .then((response) => {
                     if (response.data.user) {
                         setIsLoggedIn(true);
@@ -40,10 +42,12 @@ const Login = ({ setUser }) => {
         
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/login", 
-                { email, password },
-                { withCredentials: true }
-            );
+    `${import.meta.env.VITE_API_URL}/api/auth/login`, // Vite
+    // `${process.env.REACT_APP_API_URL}/api/auth/login`, // CRA
+    { email, password },
+    { withCredentials: true }
+);
+
             
             // Store token in localStorage
             localStorage.setItem("token", response.data.token);

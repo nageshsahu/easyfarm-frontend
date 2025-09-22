@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,40 +17,40 @@ const Signup = () => {
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        setMessage(""); // Reset previous messages
-    
+        setMessage("");
+
         if (password !== confirmPassword) {
             setMessage("Passwords do not match!");
             return;
         }
-    
+
         try {
-            setLoading(true); // Set loading state
+            setLoading(true);
+
             const response = await axios.post(
-                "http://localhost:5000/api/auth/signup",
+                `${import.meta.env.VITE_API_URL}/api/auth/signup`, // ✅ using env variable
                 { name, email, password },
                 {
                     headers: { "Content-Type": "application/json" },
-                    withCredentials: true, // Allow cookies
+                    withCredentials: true,
                 }
             );
-    
+
             setMessage(response.data.message || "Signup successful!");
             setSuccessfulSignup(true);
-            
+
             // Reset form
             setName("");
             setEmail("");
             setPassword("");
             setConfirmPassword("");
-            
-            // Redirect to login after 2 seconds
+
+            // Redirect to login
             setTimeout(() => {
                 navigate("/Login");
             }, 2000);
-            
+
         } catch (error) {
-            // Improved error handling
             if (error.response) {
                 setMessage(error.response.data.error || "An error occurred.");
             } else if (error.request) {
@@ -58,10 +59,9 @@ const Signup = () => {
                 setMessage("Something went wrong. Please check your input and try again.");
             }
         } finally {
-            setLoading(false); // Reset loading state
+            setLoading(false);
         }
     };
-    
 
     return (
         <div
